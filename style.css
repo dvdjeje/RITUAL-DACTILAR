@@ -1,0 +1,240 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Rubik+Spray+Paint&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Nunito Sans";
+  background-color: rgb(255, 244, 87);
+}
+
+#contenedor-img {
+  width: 30%;
+  position: fixed;
+  left: 35%;
+  top: 50%;
+  transform: translateY(-50%);
+  height: auto;
+  border: 7px solid rgb(0, 0, 0);
+}
+
+#contenedor-img > img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+
+#ventana1,
+#ventana2,
+#ventana3,
+#ventana4,
+#ventana5,
+#ventana6 {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+
+#ventana1 img,
+#ventana2 img,
+#ventana3 img,
+#ventana4 img,
+#ventana5 img,
+#ventana6 img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+
+#ventana1 {
+  position: absolute;
+  top: 1%;
+  left: 42%;
+  width: 12%;
+}
+
+#ventana2 {
+  position: absolute;
+  top: 12%;
+  left: 63%;
+  width: 12%;
+  z-index: 10;
+}
+
+#ventana3 {
+  position: absolute;
+  top: 32%;
+  left: 61%;
+  width: 14%;
+  z-index: 99999;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+#ventana4 {
+  position: absolute;
+  top: 43%;
+  left: 44%;
+  width: 9%;
+  z-index: 10;
+}
+
+#ventana5 {
+  position: absolute;
+  top: 54%;
+  left: 64%;
+  width: 9%;
+  z-index: 10;
+}
+
+#ventana6 {
+  position: absolute;
+  top: 64%;
+  left: 63%;
+  width: 12%;
+  z-index: 10;
+}
+
+#ventana1:hover,
+#ventana2:hover,
+#ventana3:hover,
+#ventana4:hover,
+#ventana5:hover,
+#ventana6:hover {
+  opacity: 1;
+}
+
+#ventana1:hover {
+  position: absolute;
+  opacity: 1;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+#informacion-ventana1 {
+    position: absolute;
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 20px;
+    width: 220px;
+    background-color: white;
+    border: 1px solid black;
+    font-size: 16px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 100000;
+}
+
+#informacion-ventana1.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+
+#ventana3:hover {
+  position: absolute;
+  opacity: 1;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+#informacion-ventana3 {
+    position: absolute;
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 20px;
+    width: 220px;
+    background-color: white;
+    border: 1px solid black;
+    font-size: 16px;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 100000;
+}
+
+#informacion-ventana3.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+#informacion-ventana4 {
+    position: absolute;
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 20px;
+    width: 220px;
+    background-color: white;
+    border: 1px solid black;
+    font-size: 16px;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 100000;
+}
+
+#informacion-ventana4.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+#informacion-ventana5 {
+    position: absolute;
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 20px;
+    width: 220px;
+    background-color: white;
+    border: 1px solid black;
+    font-size: 16px;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 100000;
+}
+
+#informacion-ventana5.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+#contenedor-hora {
+  position: absolute;
+  bottom: 1200px;
+  right: 480px;
+  transform: translateX(-50%);
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 60px;
+  opacity: 1;
+  height: auto;
+  z-index: 9999;
+}
+
+#contenedor-hora p{
+  margin: 0;
+  margin: 5px;
+}
+

@@ -1,0 +1,86 @@
+[
+  {
+    "hora_inicio": "5:00",
+    "hora_fin": "8:00",
+    "ventana_1": "Carlos, un Lego obrero, se lava los dientes (o finge hacerlo porque es un lego y no tiene dientes).",
+    "ventana_3": "Francisco, un Lego que se cuestiona su vida como Lego, se lava los dientes pero está cansado de lo mismo todos los días.",
+    "ventana_4": "Batman, el héroe de la noche, aún duerme pues nunca se levanta temprano.",
+    "ventana_5": "Homero el Lego se alista para su trabajo en la planta nuclear.",
+    "audio_ventana_1": "assets/grifo.wav",
+    "audio_ventana_2": "assets/grifo.wav",
+    "audio_ventana_3": "assets/roncar.wav",
+    "audio_ventana_4": "assets/ducha.wav"
+  },
+  {
+    "hora_inicio": "8:00",
+    "hora_fin": "12:00",
+    "ventana_1": "Carlos, un Lego obrero, se encuentra en la obra donde trabaja.",
+    "ventana_3": "Francisco, un Lego que se cuestiona su vida como Lego, sigue conflictuado con la idea de que salgan bloques azules por el grifo en vez de agua normal.",
+    "ventana_4": "Batman, el héroe de la noche, se levanta alrededor de las 11 y se prepara unos waffles.",
+    "ventana_5": "Homero el Lego trabaja (o finge hacerlo porque es Homero).",
+    "audio_ventana_1": "assets/room1.wav",
+    "audio_ventana_2": "assets/ducha.wav",
+    "audio_ventana_3": "assets/toaster.wav",
+    "audio_ventana_4": "assets/room2.wav"
+  },
+  {
+    "hora_inicio": "12:00",
+    "hora_fin": "14:00",
+    "ventana_1": "Carlos, un Lego obrero, está en su horario de almuerzo y se come un churrasco (o finge hacerlo porque es un lego y no puede comer.",
+    "ventana_3": "Francisco, un Lego que se cuestiona su vida como Lego, intenta comer, pero no tiene caso porque es un Lego y no puede comer.",
+    "ventana_4": "Batman, el héroe de la noche, se entretiene en su mesa de billar.",
+    "ventana_5": "Homero el Lego sale a su descanso para almorzar y se reune con sus amigos Lenny y Carl.",
+    "audio_ventana_1": "assets/room1.wav",
+    "audio_ventana_2": "assets/toaster.wav",
+    "audio_ventana_3": "assets/billar.wav",
+    "audio_ventana_4": "assets/room2.wav"
+  },
+  {
+    "hora_inicio": "14:00",
+    "hora_fin": "17:00",
+    "ventana_1": "Carlos, un Lego obrero, se reune con sus amigos en el bar de Moe y toma unas cervezas.",
+    "ventana_3": "Francisco, un Lego que se cuestiona su vida como Lego, empieza a pensar que, quizás, es parte de una página web.",
+    "ventana_4": "Batman, el héroe de la noche, ve una serie de inicio a fin.",
+    "ventana_5": "Homero el Lego sale de trabajar y él y sus amigos van al bar de Moe, donde se encuentran con Carlos, un Lego obrero.",
+    "audio_ventana_1": "assets/room1.wav",
+    "audio_ventana_2": "assets/pensar.wav",
+    "audio_ventana_3": "assets/tv.wav",
+    "audio_ventana_4": "assets/room2.wav"
+  },
+  {
+    "hora_inicio": "17:00",
+    "hora_fin": "19:00",
+    "ventana_1": "Carlos, un Lego obrero, inicia el trayecto de vuelta a su casa.",
+    "ventana_3": "Francisco, un Lego que se cuestiona su vida como Lego, empieza a hablarle a sus otros amigos Lego acerca de su teoría pero nadie parece hacerle caso",
+    "ventana_4": "Batman, el héroe de la noche, da una caminata alrededor de su baticueva para calentar.",
+    "ventana_5": "Homero el Lego se pasa de cervezas y se queda dormido en el bar de Moe.",
+    "audio_ventana_1": "assets/room1.wav",
+    "audio_ventana_2": "assets/pensar.wav",
+    "audio_ventana_3": "assets/cueva.wav",
+    "audio_ventana_4": "assets/room2.wav"
+},
+  {
+    "hora_inicio": "19:00",
+    "hora_fin": "21:00",
+    "ventana_1": "Carlos, un Lego obrero, se alista para dormir.",
+    "ventana_3": "Francisco, un Lego que se cuestiona su vida como Lego, se propone llegar al fondo de esto",
+    "ventana_4": "Batman, el héroe de la noche, se alista para su jornada de trabajo.",
+    "ventana_5": "Homero el Lego llega a su casa y saluda a su esposa e hijos.",
+    "audio_ventana_1": "assets/bostezo.wav",
+    "audio_ventana_2": "assets/tension.wav",
+    "audio_ventana_3": "assets/box.wav",
+    "audio_ventana_4": "assets/homero.wav"
+},
+  {
+    "hora_inicio": "21:00",
+    "hora_fin": "5:00",
+    "ventana_1": "Carlos, un Lego obrero, duerme plácidamente.",
+    "ventana_3": "Francisco, un Lego que se cuestiona su vida como Lego, logra salir de la página web y se jura a sí mismo vengarse, buscando y asesinando a su creador.",
+    "ventana_4": "Batman, el héroe de la noche, sale a buscar criminales.",
+    "ventana_5": "Homero el Lego duerme plácidamente.",
+    "audio_ventana_1": "assets/roncar.wav",
+    "audio_ventana_2": "assets/tension.wav",
+    "audio_ventana_3": "assets/batman.wav",
+    "audio_ventana_4": "assets/roncar.wav"
+  }
+]
