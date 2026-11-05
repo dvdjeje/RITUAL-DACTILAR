@@ -23,11 +23,20 @@ body {
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#mensaje {
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  text-align: center;
+  padding: 0 20px;
+  color: black;
 }
 
 #imagen {
   max-width: 90%;
-  max-height: 90%;
+  max-height: 75%;
   object-fit: contain;
   display: none;
 }
