@@ -1,5 +1,5 @@
 const touchArea = document.getElementById("touch-area");
-const fingerImage = document.getElementById("finger-image");
+const fingerImage = document.getElementById("imagen");
 
 // Imágenes según la cantidad de dedos
 const images = {
