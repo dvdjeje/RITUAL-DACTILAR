@@ -1,21 +1,199 @@
-* { box-sizing: border-box; }
-html, body { margin: 0; width: 100%; height: 100%; }
-body { background: #180d28; color: #fff; font-family: Georgia, 'Times New Roman', serif; }
-button { font: inherit; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
-.historia { position: relative; width: 100%; height: 100vh; height: 100dvh; overflow: hidden; }
-.pantalla { position: absolute; inset: 0; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 550ms ease, visibility 550ms ease; }
-.pantalla.activa { opacity: 1; visibility: visible; pointer-events: auto; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-/* Portada: imagen original de la puerta */
-.pantalla-inicio { display: grid; place-items: center; background: linear-gradient(rgba(18,5,33,.12),rgba(18,5,33,.28)), url('assets/escenarios/puerta.jpg') center / cover no-repeat; }
-.titulo-kino { display: flex; flex-direction: column; gap: 16px; align-items: center; justify-content: center; border: 0; background: transparent; color: white; font-size: clamp(64px, 17vw, 115px); line-height: 1; text-shadow: 0 2px 16px rgba(0,0,0,.42); cursor: pointer; padding: 22px; transform: translateY(-4%); }
-.titulo-kino .indicacion { font-family: Arial, sans-serif; font-size: 12px; font-weight: 400; letter-spacing: .18em; text-transform: uppercase; opacity: .88; }
-.titulo-kino:active { transform: translateY(-4%) scale(.97); }
-.titulo-kino:focus-visible, .boton-volver:focus-visible { outline: 2px solid #fff; outline-offset: 5px; }
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
 
-/* Bar: se ve completo en celular (sin cortar los lados). */
-.pantalla-bar { display: grid; place-items: center; background: #160e25; isolation: isolate; }
-.pantalla-bar::before { content: ''; position: absolute; inset: -24px; z-index: -1; background: url('assets/escenarios/bar3.jpg') center / cover no-repeat; filter: blur(25px) brightness(.46); }
-.imagen-bar { width: 100%; height: 100%; object-fit: contain; display: block; }
-.boton-volver { position: absolute; top: max(18px, env(safe-area-inset-top)); left: max(16px, env(safe-area-inset-left)); border: 1px solid rgba(255,255,255,.65); border-radius: 30px; padding: 10px 17px; color: white; background: rgba(18,9,32,.72); font-size: 14px; cursor: pointer; }
-@media (prefers-reduced-motion: reduce) { .pantalla { transition: none; } }
+body {
+    background: #180d28;
+    color: white;
+    font-family: Georgia, serif;
+}
+
+.historia {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+}
+
+/* TRANSICIONES */
+
+.pantalla {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .55s ease;
+}
+
+.pantalla.activa {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* PORTADA */
+
+.pantalla-inicio {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background:
+        linear-gradient(
+            rgba(18,5,33,.12),
+            rgba(18,5,33,.28)
+        ),
+        url("assets/escenarios/puerta.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.titulo-kino {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+
+    border: none;
+    background: transparent;
+    color: white;
+
+    font-family: Georgia, serif;
+    font-size: clamp(55px, 12vw, 110px);
+
+    text-shadow: 0 2px 16px rgba(0,0,0,.5);
+
+    padding: 20px;
+    cursor: pointer;
+    touch-action: manipulation;
+}
+
+.indicacion {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* INTERIOR DEL BAR */
+
+.pantalla-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #160e25;
+    isolation: isolate;
+}
+
+/* Fondo desenfocado para rellenar espacios */
+
+.pantalla-bar::before {
+    content: "";
+    position: absolute;
+    inset: -25px;
+    z-index: -1;
+
+    background:
+        url("assets/escenarios/bar3.jpg")
+        center / cover no-repeat;
+
+    filter: blur(22px) brightness(.45);
+}
+
+/* Imagen original completa */
+
+.imagen-bar {
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+    object-position: center;
+
+    position: relative;
+    z-index: 1;
+}
+
+/* BOTÓN VOLVER */
+
+.boton-volver {
+    position: absolute;
+    z-index: 5;
+
+    top: max(18px, env(safe-area-inset-top));
+    left: max(16px, env(safe-area-inset-left));
+
+    padding: 10px 18px;
+
+    background: rgba(18,9,32,.75);
+    border: 1px solid rgba(255,255,255,.7);
+    border-radius: 25px;
+
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* AJUSTES PARA CELULARES HORIZONTALES */
+
+@media screen and (orientation: landscape) {
+
+    .pantalla-inicio {
+        background-position: center 48%;
+    }
+
+    .titulo-kino {
+        font-size: clamp(48px, 9vh, 85px);
+        transform: translateY(-2%);
+    }
+
+    .indicacion {
+        font-size: 10px;
+    }
+
+    .imagen-bar {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .boton-volver {
+        top: 12px;
+        left: 12px;
+        padding: 7px 13px;
+        font-size: 12px;
+    }
+}
+
+/* CELULARES VERTICALES */
+
+@media screen and (orientation: portrait) {
+
+    .pantalla-inicio {
+        background-position: center center;
+    }
+
+    .titulo-kino {
+        font-size: clamp(65px, 17vw, 110px);
+    }
+}
+
+/* ACCESIBILIDAD */
+
+@media (prefers-reduced-motion: reduce) {
+    .pantalla {
+        transition: none;
+    }
+}
