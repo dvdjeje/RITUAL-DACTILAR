@@ -1,42 +1,21 @@
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 100%; height: 100%; }
+body { background: #180d28; color: #fff; font-family: Georgia, 'Times New Roman', serif; }
+button { font: inherit; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+.historia { position: relative; width: 100%; height: 100vh; height: 100dvh; overflow: hidden; }
+.pantalla { position: absolute; inset: 0; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 550ms ease, visibility 550ms ease; }
+.pantalla.activa { opacity: 1; visibility: visible; pointer-events: auto; }
 
-html,
-body {
-  margin: 0;
-  width: 100%;
-  height: 100%;
-}
+/* Portada: imagen original de la puerta */
+.pantalla-inicio { display: grid; place-items: center; background: linear-gradient(rgba(18,5,33,.12),rgba(18,5,33,.28)), url('assets/escenarios/puerta.jpg') center / cover no-repeat; }
+.titulo-kino { display: flex; flex-direction: column; gap: 16px; align-items: center; justify-content: center; border: 0; background: transparent; color: white; font-size: clamp(64px, 17vw, 115px); line-height: 1; text-shadow: 0 2px 16px rgba(0,0,0,.42); cursor: pointer; padding: 22px; transform: translateY(-4%); }
+.titulo-kino .indicacion { font-family: Arial, sans-serif; font-size: 12px; font-weight: 400; letter-spacing: .18em; text-transform: uppercase; opacity: .88; }
+.titulo-kino:active { transform: translateY(-4%) scale(.97); }
+.titulo-kino:focus-visible, .boton-volver:focus-visible { outline: 2px solid #fff; outline-offset: 5px; }
 
-body {
-  font-family: Arial, sans-serif;
-}
-
-#touch-area {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: white;
-  touch-action: none;
-  user-select: none;
-  -webkit-user-select: none;
-  flex-direction: column;
-  gap: 20px;
-}
-
-#mensaje {
-  font-size: clamp(1.5rem, 5vw, 3rem);
-  text-align: center;
-  padding: 0 20px;
-  color: black;
-}
-
-#imagen {
-  max-width: 90%;
-  max-height: 75%;
-  object-fit: contain;
-  display: none;
-}
+/* Bar: se ve completo en celular (sin cortar los lados). */
+.pantalla-bar { display: grid; place-items: center; background: #160e25; isolation: isolate; }
+.pantalla-bar::before { content: ''; position: absolute; inset: -24px; z-index: -1; background: url('assets/escenarios/bar3.jpg') center / cover no-repeat; filter: blur(25px) brightness(.46); }
+.imagen-bar { width: 100%; height: 100%; object-fit: contain; display: block; }
+.boton-volver { position: absolute; top: max(18px, env(safe-area-inset-top)); left: max(16px, env(safe-area-inset-left)); border: 1px solid rgba(255,255,255,.65); border-radius: 30px; padding: 10px 17px; color: white; background: rgba(18,9,32,.72); font-size: 14px; cursor: pointer; }
+@media (prefers-reduced-motion: reduce) { .pantalla { transition: none; } }

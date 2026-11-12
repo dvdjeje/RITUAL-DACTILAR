@@ -1,41 +1,22 @@
-const touchArea = document.getElementById("touch-area");
-const fingerImage = document.getElementById("imagen");
+const inicio = document.getElementById('inicio');
+const bar = document.getElementById('bar');
+const botonKino = document.getElementById('boton-kino');
+const botonVolver = document.getElementById('boton-volver');
 
-
-const images = {
-  1: "assets/1 calvo.jpg",
-  2: "assets/2 calvos.webp",
-  3: "assets/3.jpg",
-  4: "assets/4 calvos.jpg",
-  5: "assets/5 calvos.jpg",
-  6: "assets/6 calvos.jpg",
-  7: "assets/7 calvos.jpg",
-  8: "assets/8 calvos.jpg",
-  9: "assets/9 calvos.jpg",
-  10: "assets/10 calvos.jpg"
-};
-
-
-function updateImage(event) {
-  const fingers = event.touches.length;
-
-  if (images[fingers]) {
-    fingerImage.src = images[fingers];
-    fingerImage.style.display = "block";
-  } else {
-    fingerImage.src = "";
-    fingerImage.style.display = "none";
-  }
+function mostrarBar() {
+  inicio.classList.remove('activa');
+  bar.classList.add('activa');
+  inicio.setAttribute('aria-hidden', 'true');
+  bar.setAttribute('aria-hidden', 'false');
 }
 
-touchArea.addEventListener("touchstart", updateImage, {
-  passive: false
-});
+function mostrarInicio() {
+  bar.classList.remove('activa');
+  inicio.classList.add('activa');
+  bar.setAttribute('aria-hidden', 'true');
+  inicio.setAttribute('aria-hidden', 'false');
+}
 
-touchArea.addEventListener("touchmove", updateImage, {
-  passive: false
-});
-
-touchArea.addEventListener("touchend", updateImage);
-
-touchArea.addEventListener("touchcancel", updateImage);
+// El evento click también funciona con un toque del dedo en el celular.
+botonKino.addEventListener('click', mostrarBar);
+botonVolver.addEventListener('click', mostrarInicio);

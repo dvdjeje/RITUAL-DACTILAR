@@ -1,17 +1,28 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Contador táctil</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#180d28">
+  <title>Kino — Una historia interactiva</title>
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
 </head>
 <body>
-  <main id="touch-area">
-    <h1 id="mensaje">¿Cuántos calvos caben en tu pantalla?</h1>
-    <img id="imagen" src="" alt="">
+  <main class="historia">
+    <!-- Primera pantalla: fachada. El título completo es el botón táctil. -->
+    <section id="inicio" class="pantalla pantalla-inicio activa" aria-label="Inicio de Kino">
+      <button id="boton-kino" class="titulo-kino" type="button" aria-label="Entrar al bar Kino">
+        Kino
+        <span class="indicacion">Toca para entrar</span>
+      </button>
+    </section>
+
+    <!-- Segunda pantalla: interior del bar -->
+    <section id="bar" class="pantalla pantalla-bar" aria-label="Interior del bar" aria-hidden="true">
+      <img class="imagen-bar" src="assets/escenarios/bar3.jpg" alt="Interior nocturno del bar Kino" />
+      <button id="boton-volver" class="boton-volver" type="button" aria-label="Volver a la portada">← Volver</button>
+    </section>
   </main>
 </body>
 </html>
