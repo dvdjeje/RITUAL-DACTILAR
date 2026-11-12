@@ -207,3 +207,98 @@ body {
         transition: none;
     }
 }
+
+
+.texto-intro {
+    position: absolute;
+    z-index: 3;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 85%;
+    max-width: 650px;
+
+    text-align: center;
+
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(19px, 3vw, 30px);
+    line-height: 1.6;
+
+    color: #f1dfc9;
+
+    padding: 25px 20px;
+    border-radius: 8px;
+
+    font-style: italic;
+
+    /* Estado inicial: invisible y desenfocado */
+    opacity: 0;
+    filter: blur(12px);
+}
+
+/* Animación al entrar al bar */
+
+.pantalla-bar.activa .texto-intro {
+    animation: aparecerTexto 1s ease forwards;
+}
+
+@keyframes aparecerTexto {
+
+    0% {
+        opacity: 0;
+        filter: blur(12px);
+        transform: translate(-50%, -45%);
+    }
+
+    40% {
+        opacity: 0.5;
+        filter: blur(6px);
+    }
+
+    100% {
+        opacity: 1;
+        filter: blur(0);
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* Accesibilidad */
+
+@media (prefers-reduced-motion: reduce) {
+    .pantalla-bar.activa .texto-intro {
+        animation: none;
+        opacity: 1;
+        filter: blur(0);
+        transform: translate(-50%, -50%);
+    }
+}
+
+.texto-intro {
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Transición entre diálogos */
+
+.texto-intro.cambiando {
+    opacity: 0;
+    filter: blur(12px);
+    transition: opacity .6s ease, filter .6s ease;
+}
+
+.pantalla-escenario2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #160e25;
+}
+
+.imagen-escenario2 {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
