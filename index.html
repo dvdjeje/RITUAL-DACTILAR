@@ -6,37 +6,149 @@
   <meta name="theme-color" content="#180d28">
   <title>Kino — Una historia interactiva</title>
   <link rel="stylesheet" href="style.css">
+  <script src="narrativa.js" defer></script>
   <script src="script.js" defer></script>
 </head>
 <body>
-  <main class="historia">
-    <!-- Primera pantalla: fachada. El título completo es el botón táctil. -->
-    <section id="inicio" class="pantalla pantalla-inicio activa" aria-label="Inicio de Kino">
-      <button id="boton-kino" class="titulo-kino" type="button" aria-label="Entrar al bar Kino">
-        Kino
-        <span class="indicacion">Toca para entrar</span>
-      </button>
-    </section>
+<main class="historia">
+  <!-- 1. Portada vertical original -->
+  <section id="inicio" class="pantalla pantalla-inicio activa" aria-label="Portada" aria-hidden="false">
+    <div class="marco marco-inicio">
+      <img class="fondo" src="assets/escenarios/puerta vertical.png" alt="Entrada al bar Kino" draggable="false">
+      <button id="boton-kino" class="titulo-kino" type="button">Kino<span class="indicacion">Toca para entrar</span></button>
+    </div>
+  </section>
+  <!-- 2. Introducción: conservar fondo original -->
+  <section id="bar" class="pantalla" aria-label="Introducción" aria-hidden="true">
+    <div class="marco">
+      <img class="fondo" src="assets/escenarios/bar.png" alt="Interior del bar Kino">
+      <button id="boton-volver" class="volver" type="button">← Inicio</button>
+      <button id="dialogo" class="texto-intro" type="button" aria-label="Continuar relato"></button>
+    </div>
+  </section>
+  <!-- 3. Exploración: conservar fondo original -->
+  <section id="escenario2" class="pantalla" aria-label="Explorar el bar" aria-hidden="true">
+    <div class="marco">
+      <img class="fondo" src="assets/escenarios/Café Bar con Tocadiscos Retro.png" alt="Interior nocturno del bar">
+      <span id="marca-dia" class="marca-dia"></span>
+      <button id="boton-tocadiscos" type="button" class="zona-tocadiscos" aria-label="Acercarse al tocadiscos"><span class="brillo"></span></button>
+      <button id="boton-bebida" type="button" class="zona-bebida" aria-label="Preparar una bebida" hidden><span class="brillo"></span></button>
+      <button id="boton-plantas" type="button" class="zona-plantas" aria-label="Salir a cuidar las plantas" hidden><span class="brillo"></span></button>
+      <button id="boton-cerrar" type="button" class="zona-cerrar" aria-label="Cerrar el bar y terminar el día" hidden><span class="brillo"></span></button>
+    </div>
+  </section>
+  <!-- 4. Tocadiscos: fondo, carátulas cuadradas y aguja visible -->
+  <section id="escenario-musica" class="pantalla" aria-label="Tocadiscos interactivo" aria-hidden="true">
+    <div id="escena-musica" class="marco">
+      <img class="fondo" src="assets/escenarios/tocadiscos.png" alt="Tocadiscos de Kino" draggable="false">
+      <button id="regresar-bar" class="volver" type="button" aria-label="Volver al bar">‹</button>
+      <div id="carrusel" class="carrusel" aria-label="Explorar tres fundas de vinilos">
+        <button class="caratula lateral" data-offset="-1" type="button" aria-label="Ver disco anterior"><img id="album-izq" src="assets/discos/3.jpg" alt=""></button>
+        <div id="funda-central" class="funda-central" role="button" tabindex="0" aria-label="Sacar el vinilo de la funda seleccionada">
+          <img id="album-centro" src="assets/discos/1.jpg" alt="Portada seleccionada" draggable="false">
+          <span id="vinilo-asomando" class="vinilo-asomando"><span class="centro-vinilo"></span></span>
+        </div>
+        <button class="caratula lateral" data-offset="1" type="button" aria-label="Ver disco siguiente"><img id="album-der" src="assets/discos/2.jpg" alt=""></button>
+      </div>
+      <div id="puntos" class="puntos" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+      <div id="zona-plato" class="zona-plato" aria-label="Plato del tocadiscos">
+        <canvas id="canvas-vinilo" width="600" height="240" aria-hidden="true"></canvas>
+        <span id="halo-plato" class="halo-plato"></span>
+      </div>
+      <div id="aguja-touch" class="aguja-touch" role="button" tabindex="0" aria-label="Arrastrar la aguja hacia el disco">
+        <span class="brazo-aguja"></span><span class="punta-aguja"></span><span class="punto-aguja"></span>
+      </div>
+      <div id="destino-aguja" class="destino-aguja" aria-hidden="true"></div>
+      <div id="vinilo-libre" class="vinilo-libre" hidden aria-hidden="true"><span class="centro-vinilo"></span></div>
+      <div id="estado" class="sr-only" role="status" aria-live="polite"></div>
+      <button id="reiniciar" class="reiniciar" type="button" hidden aria-label="Elegir otro disco">↻</button>
+    </div>
+  </section>
+  <!-- 5. Ritual de bebida -->
+  <section id="escenario-bebida" class="pantalla" aria-label="Preparar bebida" aria-hidden="true">
+    <div class="marco">
+      <img class="fondo" src="assets/escenarios/barra.jpg" alt="Barra con botellas, hielo y agua">
+      <button id="volver-bebida" class="volver" type="button" aria-label="Volver al bar">‹</button>
+      <div class="mesa-ritual">
+        <button id="cubitos" class="cubitera" type="button" aria-label="Agregar hielo"><span class="cubos">❄</span><span class="contador-hielo" id="hielo-num">0/2</span></button>
+        <button id="botella-ritual" class="botella-ritual" type="button" aria-label="Activar la botella para servir whisky"><span class="botella-tapa"></span><span class="botella-cuello"></span><span class="botella-cuerpo"></span></button>
+        <div id="vaso-ritual" class="vaso-ritual" role="button" tabindex="0" aria-label="Entregar el vaso hacia la izquierda"><div id="liquido" class="liquido"></div><div class="hielos-visual" id="hielos-visual"></div></div>
+        <div id="servir-destino" class="servir-destino" aria-hidden="true"></div>
+        <div id="ayuda-inclinacion" class="ayuda-inclinacion" aria-hidden="true">↷</div>
+        <button id="servir-alternativo" class="servir-alternativo" type="button" hidden aria-label="Mantener presionado para verter sin sensor">↷</button>
+      </div>
+      <div id="estado-bebida" class="sr-only" role="status" aria-live="polite"></div>
+    </div>
+  </section>
+  <!-- 6. Exterior nuevo -->
+  <section id="escenario-plantas" class="pantalla" aria-label="Cuidar las plantas" aria-hidden="true">
+    <div class="marco">
+      <img class="fondo" src="assets/escenarios/exterior.png" alt="Callejón exterior del bar Kino con plantas" draggable="false">
+      <button id="volver-plantas" class="volver" type="button" aria-label="Volver al bar">‹</button>
+      <div id="jardin" class="jardin-natural">
 
-    <!-- Segunda pantalla: interior del bar -->
-    <section id="bar" class="pantalla pantalla-bar" aria-label="Interior del bar" aria-hidden="true">
-      <img class="imagen-bar" src="assets/escenarios/bar3.jpg" alt="Interior nocturno del bar Kino" />
-      <button id="boton-volver" class="boton-volver" type="button" aria-label="Volver a la portada">← Volver</button>
-<div id="dialogo" class="texto-intro">
-    Mi nombre es Kino, acabo de enterarme
-    de que mi esposa me fue infiel.
-</div>
-    </section>
-
-    <section id="escenario2" class="pantalla pantalla-escenario2" aria-label="Segundo escenario" aria-hidden="true">
-
-    <img
-        class="imagen-escenario2"
-        src="assets/escenarios/Rainy Tokyo Jazz Lounge.png"
-        alt="Segundo escenario"
+<div id="guia-riego" class="guia-riego" aria-hidden="true">
+  <svg viewBox="0 0 110 100" class="dibujo-riego">
+    <!-- Trayectoria del dedo -->
+    <path
+      d="M15 22 Q85 5 83 32 T25 55 T78 75"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-dasharray="4 5"
+      stroke-linecap="round"
     />
 
-</section>
-  </main>
+    <!-- Mano con dedo índice extendido -->
+    <g class="mano-riego">
+      <path
+        d="M48 84 L43 68 L38 58
+           Q35 52 39 50
+           Q43 48 46 54
+           L50 61
+           L48 29
+           Q48 23 53 23
+           Q58 23 58 29
+           L59 53
+           Q62 48 66 50
+           L70 55
+           Q74 51 78 55
+           L82 62
+           Q87 60 90 65
+           L88 81
+           Q85 91 74 94
+           L59 94 Z"
+        fill="rgba(255,230,205,.18)"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linejoin="round"
+      />
+    </g>
+  </svg>
+
+  <span>Desliza para regar</span>
+</div>
+        <button
+  id="planta-natural"
+  class="planta-natural"
+  type="button"
+  aria-label="Deslizar el dedo para regar la planta">
+</button>
+        <div id="lluvia-natural" class="lluvia-natural" aria-hidden="true"></div>
+      </div>
+      <div id="estado-plantas" class="sr-only" role="status" aria-live="polite"></div>
+    </div>
+  </section>
+  <!-- 7. Transición y pensamientos -->
+  <section id="transicion-dia" class="pantalla transicion-dia" aria-hidden="true" aria-label="Día siguiente"><div id="texto-dia" class="rotulo-dia">Día 2</div></section>
+  <div id="pensamiento" class="pensamiento" hidden>
+    <button id="pensamiento-continuar" type="button" aria-label="Continuar"><span id="pensamiento-texto"></span><span class="flecha-pensamiento">▾</span></button>
+  </div>
+  <audio
+  id="audio-jazz"
+  preload="auto"
+  loop>
+</audio>
+</main>
 </body>
 </html>

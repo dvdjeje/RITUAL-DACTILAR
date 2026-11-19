@@ -1,0 +1,30 @@
+KINO — FUSIÓN DE VERSIONES
+
+Archivos de código:
+- index.html
+- style.css
+- script.js
+- narrativa.js
+
+Mantén en tu proyecto la carpeta assets/ original. Esta entrega NO incluye imágenes ni audio, porque no se adjuntaron sus archivos.
+
+Imágenes conservadas de la versión principal:
+- assets/escenarios/puerta vertical.png
+- assets/escenarios/bar.png
+- assets/escenarios/Café Bar con Tocadiscos Retro.png
+- assets/escenarios/tocadiscos.png
+- assets/discos/1.jpg, 2.jpg, 3.jpg
+
+Imágenes nuevas esperadas:
+- assets/escenarios/barra.jpg
+- assets/escenarios/exterior.png
+
+Audio:
+- assets/audio/jazz_original_demo.wav
+
+La sesión comienza desde el día 1 al recargar, como en la versión de la compañera.
+Los textos se editan en narrativa.js.
+
+Cambios preservados: portada 9:16 con <img src>, carátulas 1:1, aguja metálica visible que se arrastra hacia la izquierda, desaparición de círculos luminosos al sonar.
+
+NOTA: La ubicación de los botones de bebida, plantas y cierre se heredó de la versión anterior, pero el fondo de exploración es distinto. Es posible que haya que ajustar los porcentajes left/top al probarlo visualmente con la imagen definitiva.

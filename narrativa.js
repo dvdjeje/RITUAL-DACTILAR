@@ -1,0 +1,88 @@
+/* Pensamientos de Kino: 15 por disco. Edita libremente estos textos. */
+window.KINO_DIALOGOS = {
+  billie: [
+    'No sé si me gusta esta voz. Suena demasiado triste para un lugar como este.',
+    'Hay algo extraño en su forma de cantar. Como si estuviera contando algo que no quiere decir.',
+    'No es la música que suelo poner. Aunque debo admitir que tiene algo especial.',
+    'Otra vez este disco. Supongo que me estoy acostumbrando.',
+    'Conozco esta melodía. No recuerdo dónde la escuché por primera vez.',
+    'Es curioso. Antes no me gustaba demasiado y ahora la pongo casi todas las noches.',
+    'Hay una parte de esta canción que siempre me hace detener lo que estoy haciendo.',
+    'Hoy recordé algo mientras sonaba. Pero se me fue antes de poder entenderlo.',
+    'No sé por qué sigo escogiendo esta canción. A veces me deja una sensación desagradable.',
+    'Creo que ella escuchaba esta canción. No estoy completamente seguro.',
+    'Sí. Le gustaba mucho. A veces la ponía cuando estábamos solos en casa.',
+    'Recuerdo que una noche me pidió que bailáramos. Yo le dije que no sabía bailar.',
+    'Terminamos bailando en la sala. Me acuerdo de que se rio cuando pisé su pie.',
+    'Fue la última vez que bailamos juntos. En ese momento pensé que todo estaba bien.',
+    'Ahora recuerdo aquella noche con claridad. Supongo que hay cosas que uno intenta olvidar, aunque sigan ahí.'
+  ],
+  coleman: [
+    'Coleman Hawkins. Siempre me ha gustado el sonido de su saxofón.',
+    'Este disco queda bien a esta hora. No necesito nada más.',
+    'El saxofón tiene una forma particular de llenar el silencio. Me gusta eso.',
+    'Hoy volví a elegir el mismo disco. Ni siquiera tuve que pensarlo.',
+    'La barra está limpia, las botellas están en su sitio y la música suena bien. Es suficiente.',
+    'Creo que todas las noches empiezan a parecerse. No me molesta.',
+    'Hoy me sorprendí esperando una nota que ya sabía que iba a llegar.',
+    'Me gusta saber exactamente lo que viene después. Quizá por eso escucho siempre estos discos.',
+    'Antes mis días eran distintos. Ahora puedo recordar una noche, pero no sé si fue ayer o la semana pasada.',
+    'En mi antiguo trabajo siempre estaba viajando. Nunca tenía tiempo para escuchar un disco completo.',
+    'Antes, cuando volvía de un viaje, había alguien esperándome en casa.',
+    'Ahora nadie me espera. Es extraño que no lo hubiera pensado hasta hoy.',
+    'He construido una vida en la que todo permanece donde lo dejo.',
+    'Las botellas, las copas, los discos. Todo está exactamente como debería. No sé por qué eso ya no me tranquiliza tanto.',
+    'Pensé que mantener las cosas en orden sería suficiente. Pero hay cosas que no puedo arreglar simplemente colocándolas en su sitio.'
+  ],
+  art: [
+    'Art Tatum. Podría escuchar este piano toda la noche.',
+    'Me gusta cuando el bar está vacío. Así puedo escuchar cada nota.',
+    'Nunca he necesitado demasiada compañía. Con buena música estoy bien.',
+    'Hoy tampoco vino mucha gente. La verdad es que prefiero que sea así.',
+    'Empiezo a conocer los sonidos de este lugar. El reloj, la lluvia, el tocadiscos.',
+    'A veces pasan horas sin que diga una palabra. Nunca me había parecido extraño.',
+    'Cuando termina una canción, el silencio parece durar un poco más.',
+    'Hoy dejé que el disco terminara y me quedé sentado sin poner otro.',
+    'Hay momentos en los que el bar parece demasiado grande para una sola persona.',
+    'Antes tampoco hablaba demasiado. Ella solía decirme que nunca sabía lo que estaba pensando.',
+    'Tal vez tenía razón. Ni siquiera yo sé muy bien qué pienso algunas veces.',
+    'Recuerdo que me preguntó si era feliz. No supe qué responderle.',
+    'Siempre pensé que estar solo y sentirse solo eran cosas diferentes.',
+    'Me gusta este bar. Me gusta la música. Pero últimamente, cuando todo queda en silencio, siento que falta algo.',
+    'Quizá no he estado buscando tranquilidad. Quizá solo estaba buscando un lugar donde no tuviera que pensar en lo que pasó.'
+  ]
+};
+window.KINO_BEBIDAS = [
+  'No es difícil preparar una bebida. Lo complicado es acostumbrarse al silencio.',
+  'Dos cubitos. El mismo vaso. Me gusta que las cosas tengan su sitio.',
+  'Todavía no viene mucha gente. Al menos puedo practicar.',
+  'El cliente del extremo de la barra siempre pide whisky con agua.',
+  'No necesita decirme nada. Ya sé cómo le gusta.',
+  'Hay algo tranquilizador en repetir exactamente una preparación.',
+  'Hoy miré el taburete vacío antes de empezar a servir.',
+  'Me pregunto si él viene por la bebida o por el silencio.',
+  'A veces preparo la misma copa incluso antes de que llegue.',
+  'En casa teníamos dos copas de vino. Casi nunca las usábamos.',
+  'He lavado este vaso tres veces. Sigue estando limpio.',
+  'Hay gestos que hago sin pensar. Quizá debería preguntarme por qué.',
+  'Sigo sirviendo las mismas medidas, aunque nada se siente igual.',
+  'Puedo limpiar la barra una y otra vez. No puedo borrar lo que recuerdo.',
+  'Siempre creí que bastaba con hacer las cosas bien. No basta.'
+];
+window.KINO_PLANTAS = [
+  'La tierra estaba seca. Al menos aquí algo depende de mí.',
+  'La gata ha vuelto. Parece gustarle este rincón.',
+  'Mañana tendré que regar de nuevo.',
+  'Las hojas crecen aunque nadie las mire.',
+  'La gata duerme junto a la puerta. No le importa que yo esté aquí.',
+  'A veces creo que entiende mejor este lugar que yo.',
+  'Hay hojas que se marchitan incluso cuando las riego.',
+  'Hoy la gata no apareció hasta muy tarde.',
+  'Me quedé esperando un ruido de pasos que no llegó.',
+  'Hace días que no veo a la gata. Quizá encontró un sitio mejor.',
+  'Volví a dejarle agua. Nadie la tocó.',
+  'Algo se movió bajo las hojas. Pensé que era ella.',
+  'Una serpiente. No recuerdo haber visto una aquí antes.',
+  'Las plantas siguen en su sitio, pero el callejón parece distinto.',
+  'He cuidado este lugar todos los días. No puedo evitar lo que está llegando.'
+];
