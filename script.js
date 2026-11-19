@@ -273,8 +273,17 @@ let hielos=0,porcentaje=0,vertidoTimer=null,vasoDrag=null;
 let sensorActivo=false,anguloBase=null,ultimoAngulo=null,botellaLista=false;
 const botella=$('botella-ritual'),ayudaSensor=$('ayuda-inclinacion'),fallback=$('servir-alternativo'),vaso=$('vaso-ritual');
 function detenerVertido(){if(vertidoTimer!==null)clearInterval(vertidoTimer);vertidoTimer=null;botella.classList.remove('sirviendo');}
-function actualizaWhisky(cantidad){
-  porcentaje=Math.min(100,Math.max(0,cantidad));$('liquido').style.height=porcentaje+'%';
+
+function actualizaWhisky(cantidad) {
+  porcentaje = Math.min(100, Math.max(0, cantidad));
+
+  $('liquido').style.height = porcentaje + '%';
+
+  // Ocultar el diagrama apenas empiece a caer whisky
+  if (porcentaje > 0) {
+    ayudaSensor.classList.remove('visible');
+  }
+
   if(porcentaje>=100){detenerVertido();sensorActivo=false;botellaLista=false;
     $('servir-destino').classList.add('visible');ayudaSensor.classList.remove('visible');fallback.hidden=true;
     $('estado-bebida').textContent='Bebida lista. Arrastra el vaso hacia la izquierda.';
@@ -285,19 +294,35 @@ function empezarBebida(){
   $('hielo-num').textContent='0/2';$('cubitos').classList.remove('listo');$('liquido').style.height='0%';
   $('hielos-visual').replaceChildren();vaso.style.transform='';$('servir-destino').classList.remove('visible');
   botella.style.transform='';ayudaSensor.classList.remove('visible');fallback.hidden=true;mostrar(bebida);
+  $('brillo-tapa').hidden = true;
 }
-$('cubitos').addEventListener('click',()=>{
-  if(hielos>=2)return;hielos++;$('hielo-num').textContent=hielos+'/2';
+
+$('cubitos').addEventListener('click', () => {
+  if (hielos >= 2) return;
+
+  hielos++;
+
+  $('hielo-num').textContent = hielos + '/2';
   $('hielos-visual').appendChild(document.createElement('span'));
-  if(hielos===2)$('cubitos').classList.add('listo');
+
+  if (hielos === 2) {
+    $('cubitos').classList.add('listo');
+
+    // Mostrar el círculo sobre la tapa
+    $('brillo-tapa').hidden = false;
+
+    $('estado-bebida').textContent =
+      'Toca la tapa de la botella.';
+  }
 });
+
 function activarAlternativa(){
   sensorActivo=false;ayudaSensor.classList.remove('visible');fallback.hidden=false;
   $('estado-bebida').textContent='Mantén presionado el botón circular para servir.';
 }
 async function prepararSensor(){
   if(hielos<2||porcentaje>=100||botellaLista)return;
-  botellaLista=true;ayudaSensor.classList.add('visible');
+  botellaLista=true;$('brillo-tapa').hidden = true;ayudaSensor.classList.add('visible');
   if(!window.DeviceOrientationEvent||!window.isSecureContext){activarAlternativa();return;}
   try{
     if(typeof DeviceOrientationEvent.requestPermission==='function'){
@@ -314,7 +339,8 @@ window.addEventListener('deviceorientation',e=>{
   if(!sensorActivo||!activo(bebida)||porcentaje>=100)return;
   const actual=Number.isFinite(e.gamma)?e.gamma:null;if(actual===null)return;
   ultimoAngulo=actual;if(anguloBase===null){anguloBase=actual;return;}
-  const inclinacion=Math.abs(actual-anguloBase),factor=Math.min(1,Math.max(0,(inclinacion-13)/22));
+  const inclinacion = Math.abs(actual - anguloBase),
+      factor = Math.min(1, Math.max(0, (inclinacion - 5) / 12));
   botella.style.transform=`rotate(${-Math.round(factor*45)}deg)`;
   botella.classList.toggle('sirviendo',factor>.1);
   if(factor>.1)actualizaWhisky(porcentaje+factor*1.25);
@@ -382,6 +408,7 @@ vaso.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&porcentaj
 let agua = 0;
 let plantaPointer = null;
 let ultimoPunto = null;
+let inicioRiego = null;
 let riegoTimer = null;
 let zonasRegadas = new Set();
 
@@ -496,6 +523,7 @@ $('guia-riego').classList.add('oculta');
   planta.setPointerCapture(e.pointerId);
 
   plantaPointer = e.pointerId;
+  inicioRiego = performance.now();
 
   ultimoPunto = {
     x: e.clientX,
@@ -533,23 +561,36 @@ function terminarPlantas() {
 }
 
 // Soltar el dedo
+
 planta.addEventListener('pointerup', e => {
   if (plantaPointer !== e.pointerId) return;
 
+  const tiempoRegando = performance.now() - inicioRiego;
+
   plantaPointer = null;
   ultimoPunto = null;
+  inicioRiego = null;
 
-  // Completar el ritual al levantar el dedo
-  agua = 100;
-  terminarPlantas();
+  if (tiempoRegando >= 1000) {
+    // Regó durante al menos un segundo
+    agua = 100;
+    terminarPlantas();
+  } else {
+    // Soltó demasiado rápido
+    $('estado-plantas').textContent =
+      'Mantén el dedo al menos un segundo para regar.';
+  }
 });
+
 
 ['pointercancel', 'lostpointercapture'].forEach(tipo => {
   planta.addEventListener(tipo, () => {
     plantaPointer = null;
     ultimoPunto = null;
+    inicioRiego = null;
   });
 });
+
 /* 7. Cierre del día */
 function terminarNoche(){
   if(progreso.paso!=='cierre')return;

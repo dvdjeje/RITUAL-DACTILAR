@@ -71,10 +71,60 @@
       <button id="volver-bebida" class="volver" type="button" aria-label="Volver al bar">‹</button>
       <div class="mesa-ritual">
         <button id="cubitos" class="cubitera" type="button" aria-label="Agregar hielo"><span class="cubos">❄</span><span class="contador-hielo" id="hielo-num">0/2</span></button>
-        <button id="botella-ritual" class="botella-ritual" type="button" aria-label="Activar la botella para servir whisky"><span class="botella-tapa"></span><span class="botella-cuello"></span><span class="botella-cuerpo"></span></button>
+        <button id="botella-ritual" class="botella-ritual" type="button" aria-label="Activar la botella para servir whisky"><span class="botella-tapa"><span id="brillo-tapa" class="brillo-tapa" hidden></span></span><span class="botella-cuello"></span><span class="botella-cuerpo"></span></button>
         <div id="vaso-ritual" class="vaso-ritual" role="button" tabindex="0" aria-label="Entregar el vaso hacia la izquierda"><div id="liquido" class="liquido"></div><div class="hielos-visual" id="hielos-visual"></div></div>
         <div id="servir-destino" class="servir-destino" aria-hidden="true"></div>
-        <div id="ayuda-inclinacion" class="ayuda-inclinacion" aria-hidden="true">↷</div>
+        
+<div id="ayuda-inclinacion"
+     class="guia-inclinacion"
+     aria-hidden="true">
+
+  <svg class="dibujo-inclinacion"
+       viewBox="0 0 120 120">
+
+    <!-- Trayectoria del movimiento -->
+    <path
+      d="M25 75 A43 43 0 0 1 95 75"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-dasharray="4 5"
+      stroke-linecap="round"
+      opacity=".6"
+    />
+
+    <!-- Celular animado -->
+    <g class="celular-inclinacion">
+      <rect
+        x="40" y="22"
+        width="40" height="73"
+        rx="8"
+        fill="rgba(255,230,205,.12)"
+        stroke="currentColor"
+        stroke-width="2.5"
+      />
+
+      <rect
+        x="45" y="30"
+        width="30" height="54"
+        rx="3"
+        fill="rgba(255,230,205,.08)"
+        stroke="currentColor"
+        stroke-width="1"
+        opacity=".6"
+      />
+
+      <circle
+        cx="60" cy="89"
+        r="2"
+        fill="currentColor"
+      />
+    </g>
+  </svg>
+
+  <span>Inclina para servir</span>
+</div>
+
         <button id="servir-alternativo" class="servir-alternativo" type="button" hidden aria-label="Mantener presionado para verter sin sensor">↷</button>
       </div>
       <div id="estado-bebida" class="sr-only" role="status" aria-live="polite"></div>
