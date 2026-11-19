@@ -12,7 +12,6 @@
 .marca-dia{position:absolute;z-index:7;top:max(22px,env(safe-area-inset-top));right:18px;color:#f9d8ad9c;font:italic 15px Georgia,serif;letter-spacing:1px;pointer-events:none}
 .zona-bebida,.zona-cerrar{position:absolute;z-index:9;border:0;background:transparent;touch-action:manipulation;cursor:pointer}.zona-bebida{left:78%;top:48%;width:25%;height:20%}.zona-cerrar{left:51%;top:45%;width:26%;height:17%}.zona-bebida[hidden],.zona-cerrar[hidden]{display:none}.zona-tocadiscos[hidden]{display:none}
 .pensamiento{position:absolute;z-index:32;inset:0;display:flex;align-items:end;justify-content:center;padding:0 18px max(7dvh,env(safe-area-inset-bottom));background:linear-gradient(transparent 25%,#100817bb)}.pensamiento[hidden]{display:none}.pensamiento button{border:1px solid #ffd6a54a;border-radius:12px;background:#150b20e6;color:#f6d8ba;width:min(100%,480px);padding:22px 18px;min-height:112px;font:italic clamp(17px,4.3vw,22px)/1.55 Georgia,serif;box-shadow:0 12px 45px #0008}.flecha-pensamiento{display:block;font-size:17px;text-align:right;color:#ffb56b;animation:pulsar 2s infinite}
-.transicion-dia{z-index:12;background:#10091c}.rotulo-dia{font:italic 25px Georgia,serif;letter-spacing:4px;color:#e2b18b;opacity:.85}
 /* Rutina de bebida: los objetos táctiles están sobre la barra del escenario */
 .mesa-ritual{position:absolute;z-index:8;left:0;top:57%;width:100%;height:38%;touch-action:none}.cubitera{position:absolute;left:8%;bottom:28%;width:20%;height:25%;background:linear-gradient(120deg,#3a293d,#a5694c,#3d2338);color:#f2e5e9;border:2px solid #c89571;border-radius:13px 13px 26px 26px;box-shadow:0 8px 12px #1c0b1e99;cursor:pointer}.cubos{display:block;font-size:29px;opacity:.8}.contador-hielo{font:12px Georgia,serif;color:#f4d6b6}.cubitera.listo{filter:saturate(.55)}.botella-ritual{position:absolute;right:9%;bottom:20%;width:22%;height:62%;border:0;background:transparent;cursor:pointer;touch-action:none;transform-origin:50% 78%;transition:transform .16s}.botella-ritual.sirviendo{transform:rotate(-43deg)}.botella-tapa{position:absolute;top:0;left:35%;width:30%;height:8%;background:#d3ac72;border:2px solid #664137;border-radius:4px}.botella-cuello{position:absolute;top:7%;left:39%;width:22%;height:23%;background:linear-gradient(90deg,#48202b,#a45b31,#4e2637);border:2px solid #bd8858}.botella-cuerpo{position:absolute;left:13%;top:28%;width:74%;height:68%;border-radius:14px 14px 8px 8px;border:2px solid #e6a462;background:linear-gradient(95deg,#4a1d2c,#98502c,#d48a3f,#6b2634);box-shadow:inset 7px 0 8px #160b29a1,0 7px 15px #10091890}.botella-cuerpo::after{content:' ';position:absolute;left:14%;right:14%;top:28%;height:38%;background:#e1b17a66;border:1px solid #e9c69a66}.vaso-ritual{position:absolute;left:38%;bottom:23%;width:23%;height:34%;border:3px solid #f9d6baaa;border-top:4px solid #fff2dc;border-radius:6px 6px 15px 15px;overflow:hidden;background:#f6d2b513;cursor:grab;touch-action:none;z-index:3;box-shadow:inset 5px 0 7px #fef6ee28,0 6px 15px #130b198c}.vaso-ritual.moviendo{cursor:grabbing}.liquido{position:absolute;left:1px;right:1px;bottom:0;height:0%;background:linear-gradient(90deg,#894116,#d88b30,#ab551b);transition:height .09s}.hielos-visual{position:absolute;bottom:8%;left:18%;right:18%;display:flex;align-items:center;justify-content:center;gap:2px}.hielos-visual span{display:block;width:19px;height:22px;transform:rotate(15deg);border:2px solid #ddf1f8a1;background:#d5f0f24d;border-radius:4px}.servir-destino{position:absolute;left:30%;bottom:80%;width:40%;height:25%;border:2px dashed #f1bb7988;border-radius:50%;opacity:0;transition:opacity .4s}.servir-destino.visible{opacity:.8;animation:pulsar 2s infinite}
 
@@ -320,3 +319,61 @@ height: 29%;
   left: 70.8%;
   top: 51.8%;
 }
+
+
+/* Fondo del cuarto de Kino */
+
+
+
+/* Transición vertical entre días */
+
+.marco-transicion {
+  position: relative;
+  width: min(100vw, 56.31dvh);
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.marco-transicion .fondo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Oscurecimiento de la habitación */
+.marco-transicion::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(12, 5, 25, 0.25);
+  pointer-events: none;
+  z-index: 1;
+}
+
+
+/* Texto de transición entre días */
+
+#texto-dia.rotulo-dia {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+
+  /* Tipografía */
+  font-family: Georgia, serif;
+  font-size: clamp(32px, 7vw, 48px);
+  font-style: italic;
+  font-weight: normal;
+
+  /* Apariencia */
+  color: #fff0df;
+  letter-spacing: 2px;
+  text-align: center;
+  white-space: nowrap;
+
+  /* Sombra suave */
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.65);
+}
+
