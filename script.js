@@ -6,7 +6,7 @@
 const $ = id => document.getElementById(id);
 const inicio=$('inicio'), bar=$('bar'), explorar=$('escenario2'), musica=$('escenario-musica');
 const bebida=$('escenario-bebida'), plantas=$('escenario-plantas'), transicion=$('transicion-dia');
-const audio=$('audio-jazz'), dialogo=$('dialogo'), funda=$('funda-central');
+const audio=$('audio-jazz'), audioGato=$('audio-maullido'), dialogo=$('dialogo'), funda=$('funda-central');
 const viniloLibre=$('vinilo-libre'), plato=$('zona-plato'), canvas=$('canvas-vinilo');
 const aguja=$('aguja-touch'), destino=$('destino-aguja'), carrusel=$('carrusel');
 const ctx=canvas.getContext('2d');
@@ -16,7 +16,7 @@ const ctx=canvas.getContext('2d');
     id: 'art',
     foto: 'assets/discos/1.jpeg',
     color: '#b96747',
-    cancion: 'assets/audio/art-tatum.mp3'
+    cancion: 'assets/audio/art-tatum-compatible.mp3'
   },
   {
     nombre: 'Coleman Hawkins',
@@ -44,14 +44,57 @@ let raf=null, inicioAnimacion=0, pensamientoCallback=null, pensamientoPendiente=
 const progresoInicial=()=>({dia:1,conteos:{art:0,coleman:0,billie:0},paso:'musica',ultima:null,escuchadosHoy:[],bebidaCompletada:false,plantasCompletadas:false});
 let progreso=progresoInicial();
 const anunciar=t=>$('estado').textContent=t;
+const criatura=$('animal-escena'), criaturaImg=$('animal-escena-img');
+const aparicionesExterior={
+  2:{tipo:'gato',pose:'alerta',src:'assets/animales/gata-alerta.png',etiqueta:'Hay un gato aquí.'},
+  5:{tipo:'gato',pose:'durmiendo',src:'assets/animales/gata-durmiendo.png',etiqueta:'La gata duerme junto a la puerta.'},
+  6:{tipo:'gato',pose:'caminando',src:'assets/animales/gata-caminando.png',etiqueta:'La gata recorre el callejón con calma.'},
+  8:{tipo:'gato',pose:'espiando',src:'assets/animales/gata-espiando.png',etiqueta:'La gata aparece tarde entre las sombras.'},
+  13:{tipo:'serpiente',pose:'hojas',src:'assets/animales/serpiente.png',etiqueta:'Una serpiente se asoma entre las hojas.'}
+};
+
 const activo=p=>p.classList.contains('activa');
+
+function actualizarCriaturaExterior(){
+  const aparicion=aparicionesExterior[progreso.dia];
+  if(!aparicion){
+    criatura.hidden=true;
+    criatura.className='animal-escena';
+    criatura.setAttribute('aria-hidden','true');
+    criatura.removeAttribute('aria-label');
+    criaturaImg.removeAttribute('src');
+    criaturaImg.alt='';
+    return;
+  }
+  criatura.hidden=false;
+  criatura.setAttribute('aria-hidden','false');
+  criatura.className=`animal-escena ${aparicion.pose}`;
+  criatura.setAttribute('aria-label',aparicion.tipo==='gato'?`${aparicion.etiqueta} Toca para escucharla.`:aparicion.etiqueta);
+  criaturaImg.src=aparicion.src;
+  criaturaImg.alt=aparicion.etiqueta;
+}
+function reproducirMaullido(){
+  if(!audioGato)return;
+  audioGato.currentTime=0;
+  audioGato.play().catch(()=>{});
+}
+criatura.addEventListener('click',()=>{
+  const aparicion=aparicionesExterior[progreso.dia];
+  if(!aparicion)return;
+  criatura.classList.remove('tocado');
+  void criatura.offsetWidth;
+  criatura.classList.add('tocado');
+  if(aparicion.tipo==='gato')reproducirMaullido();
+});
+
 
 /* 1. Navegación y diálogos */
 function mostrar(p){
-  for(const x of [inicio,bar,explorar,musica,bebida,plantas,transicion]){
+  for(const x of [inicio,bar,explorar,musica,bebida,plantas,transicion,$('epilogo')]){
     const on=x===p; x.classList.toggle('activa',on); x.setAttribute('aria-hidden',String(!on));
   }
-  if(p!==musica){audio.pause(); cancelAnimationFrame(raf); raf=null;}
+  if(p!==musica){cancelAnimationFrame(raf); raf=null;}
+  if(p===transicion||p===inicio||p===$('epilogo')){audio.pause();} else {audio.volume=p===plantas?.23:.75;}
   if(p!==bebida){detenerVertido();sensorActivo=false;}
   if(p!==plantas)clearInterval(riegoTimer);
 }
@@ -85,7 +128,7 @@ function cambiar(n){if(estado!=='elegir')return;seleccion=(seleccion+n+albumes.l
 function coord(e){const r=$('escena-musica').getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top};}
 function dentroPlato(e){
   const r=plato.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
-  return ((e.clientX-cx)/(r.width*.72))**2+((e.clientY-cy)/(r.height*1.5))**2<=1;
+  return ((e.clientX-cx)/(r.width*.95))**2+((e.clientY-cy)/(r.height*2.1))**2<=1;
 }
 function moverLibre(e){const p=coord(e);viniloLibre.style.left=p.x+'px';viniloLibre.style.top=p.y+'px';plato.classList.toggle('cerca',dentroPlato(e));}
 function extraerInicio(e){
@@ -97,7 +140,7 @@ function extraerMover(e){
   const dx=e.clientX-gesto.x,dy=e.clientY-gesto.y;
   if(!gesto.tipo){
     if(Math.abs(dx)<12&&Math.abs(dy)<12)return;
-    gesto.tipo=Math.abs(dx)>Math.abs(dy)*1.35?'swipe':'vinilo';
+    gesto.tipo='vinilo';
     if(gesto.tipo==='vinilo'){funda.classList.add('extrayendo');viniloLibre.hidden=false;}
   }
   if(gesto.tipo==='vinilo')moverLibre(e);
@@ -106,7 +149,7 @@ function extraerFin(e){
   if(!gesto||gesto.id!==e.pointerId)return;
   const g=gesto;gesto=null;funda.classList.remove('extrayendo');
   if(g.tipo==='swipe'){if(Math.abs(e.clientX-g.x)>30)cambiar(e.clientX<g.x?1:-1);return;}
-  if(g.tipo==='vinilo'&&dentroPlato(e))ponerDisco();
+  if((g.tipo==='vinilo'&&dentroPlato(e))||!g.tipo)ponerDisco();
   else{viniloLibre.hidden=true;plato.classList.remove('cerca');}
 }
 function ponerDisco(){
@@ -114,7 +157,7 @@ function ponerDisco(){
   estado='aguja';viniloLibre.hidden=true;plato.classList.remove('cerca','sonando');plato.classList.add('colocado');
   carrusel.classList.add('bloqueado');$('puntos').style.opacity='0';
   aguja.classList.add('visible');destino.classList.add('visible');dibujarDisco(0);
-  anunciar('Vinilo colocado. Arrastra la aguja hacia la izquierda.');
+  anunciar('Vinilo colocado. Arrastra la aguja hacia la izquierda o tócala.');
 }
 
 /* 3. Aguja: conservar arrastre, aguja metálica y ausencia de brillos al sonar */
@@ -132,7 +175,7 @@ function moverAguja(e){
 function terminarAguja(e){
   if(!agujaGesto||agujaGesto.id!==e.pointerId)return;
   const dx=e.clientX-agujaGesto.x;agujaGesto=null;aguja.classList.remove('moviendo');
-  if(dx<=-20){aguja.style.transform='translate(calc(-50% - 30px),calc(-50% - 3px))';tocar();}
+  if(dx<=-15||Math.abs(dx)<5){aguja.style.transform='translate(calc(-50% - 30px),calc(-50% - 3px))';tocar();}
   else{aguja.style.transform='';destino.style.opacity='1';}
 }
 function dibujarDisco(t){
@@ -180,14 +223,14 @@ function tocar() {
   audio.playbackRate = 1;
 
   audio.play().catch(() => {
-
-    anunciar('Toca el disco para activar el sonido.');
+    pensamientoPendiente=false;
+    anunciar('No se pudo iniciar el audio. Toca el disco para reintentar.');
 
     plato.style.pointerEvents = 'auto';
 
     plato.onclick = () => {
-      audio.play().catch(() => {
-        anunciar('No se pudo reproducir la canción.');
+      audio.play().then(()=>revelarPensamiento()).catch(() => {
+        anunciar('No se pudo reproducir la canción. Vuelve al bar y elige otro disco.');
       });
     };
 
@@ -215,13 +258,13 @@ function tocar() {
 
 }
 
-function reiniciar(){
-  pensamientoPendiente=false;audio.pause();audio.currentTime=0;cancelAnimationFrame(raf);raf=null;
+function reiniciar(conservarAudio=false){
+  pensamientoPendiente=false;if(!conservarAudio){audio.pause();audio.currentTime=0;}cancelAnimationFrame(raf);raf=null;
   estado='elegir';gesto=null;agujaGesto=null;plato.classList.remove('colocado','cerca','sonando');
   ctx.clearRect(0,0,canvas.width,canvas.height);carrusel.classList.remove('bloqueado');$('puntos').style.opacity='1';
   aguja.className='aguja-touch';aguja.style.transform='';destino.className='destino-aguja';destino.style.opacity='';
  viniloLibre.hidden=true;plato.style.pointerEvents='none';plato.onclick=null;
-  anunciar('Puedes elegir otro vinilo.');
+  anunciar('Elige una portada. Toca el vinilo central o arrástralo al plato.');
 }
 
 /* 4. Narrativa musical: los 15 pensamientos avanzan según día y repetición */
@@ -247,8 +290,8 @@ function revelarPensamiento() {
   const frase = fraseMusical(id);
 
   mostrarPensamiento(frase, () => {
-    // Detener la canción y reiniciar el tocadiscos
-    reiniciar();
+    // Conservar la música durante la noche
+    reiniciar(true);
 
     // Actualizar las actividades disponibles
     refrescarRutina();
@@ -259,7 +302,8 @@ function revelarPensamiento() {
 }
 
 function refrescarRutina(){
-  $('marca-dia').textContent='Día '+progreso.dia;
+  $('marca-dia').textContent='Día '+progreso.dia+' / 15';
+  $('guia-bar').textContent=progreso.paso==='musica'?'Elige un vinilo en el tocadiscos.':progreso.paso==='bebida'?'Acércate a la barra y prepara un whisky.':progreso.paso==='plantas'?'Sal al callejón a cuidar las plantas.':progreso.paso==='cierre'?'Cierra el bar cuando estés listo.':'Fin de la historia.';
   const final=progreso.paso==='final',musicaHecha=progreso.escuchadosHoy.length>0;
  $('boton-tocadiscos').hidden = final || musicaHecha;
   $('boton-tocadiscos').classList.toggle('hecha',musicaHecha);
@@ -272,12 +316,12 @@ function refrescarRutina(){
 let hielos=0,porcentaje=0,vertidoTimer=null,vasoDrag=null;
 let sensorActivo=false,anguloBase=null,ultimoAngulo=null,botellaLista=false;
 const botella=$('botella-ritual'),ayudaSensor=$('ayuda-inclinacion'),fallback=$('servir-alternativo'),vaso=$('vaso-ritual');
-function detenerVertido(){if(vertidoTimer!==null)clearInterval(vertidoTimer);vertidoTimer=null;botella.classList.remove('sirviendo');}
+function detenerVertido(){if(vertidoTimer!==null)clearInterval(vertidoTimer);vertidoTimer=null;botella.classList.remove('sirviendo');botella.style.transform='';}
 
 function actualizaWhisky(cantidad) {
   porcentaje = Math.min(100, Math.max(0, cantidad));
 
-  $('liquido').style.height = porcentaje + '%';
+  $('liquido').style.height = (porcentaje * .34) + '%';
 
   // Ocultar el diagrama apenas empiece a caer whisky
   if (porcentaje > 0) {
@@ -286,7 +330,7 @@ function actualizaWhisky(cantidad) {
 
   if(porcentaje>=100){detenerVertido();sensorActivo=false;botellaLista=false;
     $('servir-destino').classList.add('visible');ayudaSensor.classList.remove('visible');fallback.hidden=true;
-    $('estado-bebida').textContent='Bebida lista. Arrastra el vaso hacia la izquierda.';
+    $('estado-bebida').textContent='Bebida lista. Arrastra el vaso hacia el círculo marcado.';
   }
 }
 function empezarBebida(){
@@ -295,6 +339,7 @@ function empezarBebida(){
   $('hielos-visual').replaceChildren();vaso.style.transform='';$('servir-destino').classList.remove('visible');
   botella.style.transform='';ayudaSensor.classList.remove('visible');fallback.hidden=true;mostrar(bebida);
   $('brillo-tapa').hidden = true;
+  $('estado-bebida').textContent='Toca Añadir hielo dos veces.';
 }
 
 $('cubitos').addEventListener('click', () => {
@@ -386,11 +431,8 @@ vaso.addEventListener('pointerup', e => {
   const centroY = rectVaso.top + rectVaso.height / 2;
 
   // Comprobar si el centro del vaso está dentro del destino
-  const dentroDestino =
-    centroX >= rectDestino.left &&
-    centroX <= rectDestino.right &&
-    centroY >= rectDestino.top &&
-    centroY <= rectDestino.bottom;
+  const margen=24;
+  const dentroDestino = rectVaso.right>=rectDestino.left-margen && rectVaso.left<=rectDestino.right+margen && rectVaso.bottom>=rectDestino.top-margen && rectVaso.top<=rectDestino.bottom+margen && Math.hypot(dx,dy)>15;
 
   if (dentroDestino) {
     entregarBebida();
@@ -424,8 +466,9 @@ function abrirPlantas() {
   clearInterval(riegoTimer);
   lluvia.replaceChildren();
 
-  $('estado-plantas').textContent =
-    'Desliza el dedo sobre la planta para regarla.';
+  $('estado-plantas').textContent = 'Desliza el dedo sobre las hojas durante un segundo.';
+  $('jardin').classList.remove('regado');
+  actualizarCriaturaExterior();
 
   mostrar(plantas);
   $('guia-riego').classList.remove('oculta');
@@ -545,6 +588,7 @@ function terminarPlantas() {
   ultimoPunto = null;
 
   progreso.plantasCompletadas = true;
+  $('jardin').classList.add('regado');
   progreso.paso = 'cierre';
 
   $('estado-plantas').textContent =
@@ -557,7 +601,7 @@ function terminarPlantas() {
     mostrarPensamiento(
       window.KINO_PLANTAS[progreso.dia - 1]
     );
-  }, 650);
+  }, 1600);
 }
 
 // Soltar el dedo
@@ -571,7 +615,7 @@ planta.addEventListener('pointerup', e => {
   ultimoPunto = null;
   inicioRiego = null;
 
-  if (tiempoRegando >= 1000) {
+  if (tiempoRegando >= 700 || agua>=30) {
     // Regó durante al menos un segundo
     agua = 100;
     terminarPlantas();
@@ -596,8 +640,10 @@ function terminarNoche(){
   if(progreso.paso!=='cierre')return;
   mostrar(transicion);
   if(progreso.dia===15){
-    progreso.paso='final';$('texto-dia').textContent='Quince noches';
-    setTimeout(()=>mostrarPensamiento('He pasado estas noches haciendo siempre lo mismo. Tal vez todavía me quede algo que escuchar dentro de mí.',()=>{refrescarRutina();mostrar(explorar);}),700);
+    progreso.paso='final'; $('texto-dia').textContent='Día 15';
+    transicion.classList.add('ultimo-cierre');
+    setTimeout(()=>{ $('texto-dia').textContent='Día 16 · Ella'; },1600);
+    setTimeout(iniciarEpilogo,3400);
     return;
   }
   progreso.dia++;progreso.paso='musica';progreso.escuchadosHoy=[];
@@ -625,6 +671,7 @@ $('boton-tocadiscos').addEventListener('click', () => {
   reiniciar();
   mostrar(musica);
   refrescar();
+  anunciar('Elige una portada. Toca el vinilo central o arrástralo al plato.');
 
 });
 
@@ -668,3 +715,46 @@ aguja.addEventListener('keydown',e=>{
   }
 });
 refrescar();refrescarRutina();
+
+$('volver-inicio-final').addEventListener('click',()=>location.reload());
+
+/* Epílogo: otra perspectiva, sin repetir los rituales. */
+let pasoEpilogo=0, temporizadorEpilogo=null;
+const escenasEpilogo=[
+ {fondo:'puerta vertical.png',alt:'Puerta del bar',texto:'Kino, ¿estás aquí?',accion:'Abrir la puerta',zona:'entrada'},
+ {fondo:'bar.png',alt:'Bar vacío',texto:'Me contaron que aquí te encontraría. No sabía que habías construido todo esto.',accion:'Acercarse al tocadiscos',zona:'bar'},
+ {fondo:'tocadiscos.png',alt:'Tocadiscos en silencio',texto:'No sabía que todavía escuchabas estos discos. Son nuestros discos. ¿Recuerdas cuando los escuchábamos juntos en casa?',accion:'Mirar la barra',zona:'disco'},
+ {fondo:'barra.jpg',alt:'Barra sin clientes',texto:'Vine a hablar contigo. Hay tantas cosas que quedaron sin decir.',accion:'Salir al callejón',zona:'vaso'},
+ {fondo:'exterior.png',alt:'Callejón vacío',texto:'Pero ¿dónde estás?',accion:'Volver al bar',zona:'plantas'},
+ {fondo:'bar.png',alt:'Bar vacío y silencioso',texto:'Kino ya no está. No todo sufrimiento se expresa con palabras.',accion:'Continuar',zona:'despedida'}
+];
+function iniciarEpilogo(){pasoEpilogo=0;audio.pause();audioGato.pause();mostrar($('epilogo'));pintarEpilogo();}
+function pintarEpilogo(){
+ clearTimeout(temporizadorEpilogo);
+ const e=escenasEpilogo[pasoEpilogo], accion=$('epilogo-accion'), objetos=$('epilogo-objetos');
+ const marco=$('epilogo').querySelector('.marco-epilogo'), texto=$('epilogo-texto');
+ marco.classList.toggle('revelacion',e?.zona==='despedida');
+ texto.hidden=false; accion.hidden=false; accion.disabled=false; $('epilogo-marca').hidden=false; $('epilogo-fin').hidden=true; texto.setAttribute('aria-live','polite');
+ if(!e){$('epilogo-fin').hidden=false;accion.hidden=true;$('epilogo-texto').hidden=true;$('epilogo-marca').hidden=true;objetos.replaceChildren();return;}
+ $('epilogo-fondo').src='assets/escenarios/'+e.fondo;$('epilogo-fondo').alt=e.alt;
+ $('epilogo-texto').textContent=e.zona==='despedida'?e.texto:'«'+e.texto+'»';accion.textContent=e.accion;accion.className='epilogo-accion '+e.zona;objetos.replaceChildren();
+ if(e.zona==='despedida'){
+   texto.textContent=''; texto.setAttribute('aria-live','off');
+   accion.hidden=true; accion.disabled=true; $('epilogo-marca').hidden=true;
+   const frases=e.texto.split('. '); const mensaje=frases[0]+'.\n\n'+frases[1];
+   const letras=Array.from(mensaje); let i=0;
+   const reducido=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+   function escribir(){
+     if(pasoEpilogo!==5 || !activo($('epilogo')))return;
+     if(reducido){texto.textContent=mensaje;i=letras.length;}
+     else if(i<letras.length){texto.textContent+=letras[i++];}
+     if(i<letras.length){temporizadorEpilogo=setTimeout(escribir, letras[i-1]==='.'?950:letras[i-1]==='\n'?250:105);}
+     else {temporizadorEpilogo=setTimeout(()=>{if(pasoEpilogo!==5)return;texto.setAttribute('aria-live','polite');accion.hidden=false;accion.disabled=false;},1800);}
+   }
+   temporizadorEpilogo=setTimeout(escribir,2400);
+ }
+ if(e.zona==='disco') {const album=albumes.find(a=>a.id===progreso.ultima);if(album){const img=document.createElement('img');img.src=album.foto;img.className='epilogo-portada';img.alt='';objetos.append(img);const disco=document.createElement('span');disco.className='epilogo-vinilo';disco.style.setProperty('--etiqueta',album.color);objetos.append(disco);}}
+ if(e.zona==='vaso'){const vaso=document.createElement('span');vaso.className='epilogo-vaso';objetos.append(vaso);}
+}
+$('epilogo-accion').addEventListener('click',()=>{if($('epilogo-accion').disabled||$('epilogo-accion').hidden)return;pasoEpilogo++;pintarEpilogo();});
+$('epilogo-reinicio').addEventListener('click',()=>location.reload());

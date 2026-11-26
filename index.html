@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#180d28">
-  <title>Kino — Una historia interactiva</title>
+  <title>Kino</title>
   <link rel="stylesheet" href="style.css">
   <script src="narrativa.js" defer></script>
   <script src="script.js" defer></script>
@@ -29,8 +29,8 @@
   <!-- 3. Exploración: conservar fondo original -->
   <section id="escenario2" class="pantalla" aria-label="Explorar el bar" aria-hidden="true">
     <div class="marco">
-      <img class="fondo" src="assets/escenarios/Café Bar con Tocadiscos Retro.png" alt="Interior nocturno del bar">
-      <span id="marca-dia" class="marca-dia"></span>
+      <img class="fondo" src="assets/escenarios/cafe-bar-tocadiscos.png" alt="Interior nocturno del bar">
+      <span id="marca-dia" class="marca-dia"></span><div id="guia-bar" class="guia-ritual"></div>
       <button id="boton-tocadiscos" type="button" class="zona-tocadiscos" aria-label="Acercarse al tocadiscos"><span class="brillo"></span></button>
       <button id="boton-bebida" type="button" class="zona-bebida" aria-label="Preparar una bebida" hidden><span class="brillo"></span></button>
       <button id="boton-plantas" type="button" class="zona-plantas" aria-label="Salir a cuidar las plantas" hidden><span class="brillo"></span></button>
@@ -43,12 +43,12 @@
       <img class="fondo" src="assets/escenarios/tocadiscos.png" alt="Tocadiscos de Kino" draggable="false">
       <button id="regresar-bar" class="volver" type="button" aria-label="Volver al bar">‹</button>
       <div id="carrusel" class="carrusel" aria-label="Explorar tres fundas de vinilos">
-        <button class="caratula lateral" data-offset="-1" type="button" aria-label="Ver disco anterior"><img id="album-izq" src="assets/discos/3.jpg" alt=""></button>
+        <button class="caratula lateral" data-offset="-1" type="button" aria-label="Ver disco anterior"><img id="album-izq" src="assets/discos/3.jpeg" alt=""></button>
         <div id="funda-central" class="funda-central" role="button" tabindex="0" aria-label="Sacar el vinilo de la funda seleccionada">
-          <img id="album-centro" src="assets/discos/1.jpg" alt="Portada seleccionada" draggable="false">
+          <img id="album-centro" src="assets/discos/1.jpeg" alt="Portada seleccionada" draggable="false">
           <span id="vinilo-asomando" class="vinilo-asomando"><span class="centro-vinilo"></span></span>
         </div>
-        <button class="caratula lateral" data-offset="1" type="button" aria-label="Ver disco siguiente"><img id="album-der" src="assets/discos/2.jpg" alt=""></button>
+        <button class="caratula lateral" data-offset="1" type="button" aria-label="Ver disco siguiente"><img id="album-der" src="assets/discos/2.jpeg" alt=""></button>
       </div>
       <div id="puntos" class="puntos" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
       <div id="zona-plato" class="zona-plato" aria-label="Plato del tocadiscos">
@@ -60,7 +60,7 @@
       </div>
       <div id="destino-aguja" class="destino-aguja" aria-hidden="true"></div>
       <div id="vinilo-libre" class="vinilo-libre" hidden aria-hidden="true"><span class="centro-vinilo"></span></div>
-      <div id="estado" class="sr-only" role="status" aria-live="polite"></div>
+      <div id="estado" class="guia-ritual" role="status" aria-live="polite"></div>
       <button id="reiniciar" class="reiniciar" type="button" hidden aria-label="Elegir otro disco">↻</button>
     </div>
   </section>
@@ -70,7 +70,7 @@
       <img class="fondo" src="assets/escenarios/barra.jpg" alt="Barra con botellas, hielo y agua">
       <button id="volver-bebida" class="volver" type="button" aria-label="Volver al bar">‹</button>
       <div class="mesa-ritual">
-        <button id="cubitos" class="cubitera" type="button" aria-label="Agregar hielo"><span class="cubos">❄</span><span class="contador-hielo" id="hielo-num">0/2</span></button>
+        <button id="cubitos" class="cubitera" type="button" aria-label="Agregar hielo"><span class="cubos">❄</span><span class="contador-hielo" id="hielo-num">0/2</span><span class="etiqueta-hielo">Añadir hielo</span></button>
         <button id="botella-ritual" class="botella-ritual" type="button" aria-label="Activar la botella para servir whisky"><span class="botella-tapa"><span id="brillo-tapa" class="brillo-tapa" hidden></span></span><span class="botella-cuello"></span><span class="botella-cuerpo"></span></button>
         <div id="vaso-ritual" class="vaso-ritual" role="button" tabindex="0" aria-label="Entregar el vaso hacia la izquierda"><div id="liquido" class="liquido"></div><div class="hielos-visual" id="hielos-visual"></div></div>
         <div id="servir-destino" class="servir-destino" aria-hidden="true"></div>
@@ -127,7 +127,7 @@
 
         <button id="servir-alternativo" class="servir-alternativo" type="button" hidden aria-label="Mantener presionado para verter sin sensor">↷</button>
       </div>
-      <div id="estado-bebida" class="sr-only" role="status" aria-live="polite"></div>
+      <div id="estado-bebida" class="guia-ritual" role="status" aria-live="polite"></div>
     </div>
   </section>
   <!-- 6. Exterior nuevo -->
@@ -185,8 +185,11 @@
   aria-label="Deslizar el dedo para regar la planta">
 </button>
         <div id="lluvia-natural" class="lluvia-natural" aria-hidden="true"></div>
+        <button id="animal-escena" class="animal-escena" type="button" hidden aria-hidden="true" aria-label="Criatura del callejón">
+          <img id="animal-escena-img" src="" alt="" draggable="false">
+        </button>
       </div>
-      <div id="estado-plantas" class="sr-only" role="status" aria-live="polite"></div>
+      <div id="estado-plantas" class="guia-ritual" role="status" aria-live="polite"></div>
     </div>
   </section>
   <!-- 7. Transición y pensamientos -->
@@ -194,10 +197,20 @@
 <section id="transicion-dia" class="pantalla transicion-dia" aria-hidden="true" aria-label="Día siguiente">
   <div class="marco marco-transicion">
     <img class="fondo" src="assets/escenarios/cuarto kino.png" alt="Habitación de Kino durante la noche">
-    <div id="texto-dia" class="rotulo-dia">Día 2</div>
+    <div id="texto-dia" class="rotulo-dia">Día 2</div><button id="volver-inicio-final" class="boton-final" hidden>Volver al inicio</button>
   </div>
 </section>
 
+  <section id="epilogo" class="pantalla" aria-label="Epílogo: ella" aria-hidden="true">
+    <div class="marco marco-epilogo">
+      <img id="epilogo-fondo" class="fondo" alt="" draggable="false">
+      <div id="epilogo-objetos" aria-hidden="true"></div>
+      <span id="epilogo-marca" class="marca-dia">Día 16 · Ella</span>
+      <button id="epilogo-accion" class="epilogo-accion" type="button"></button>
+      <div id="epilogo-texto" class="epilogo-texto" aria-live="polite"></div>
+      <div id="epilogo-fin" class="epilogo-fin" hidden><h1>Kino</h1><p>Fin</p><button id="epilogo-reinicio" type="button">Volver al inicio</button></div>
+    </div>
+  </section>
   <div id="pensamiento" class="pensamiento" hidden>
     <button id="pensamiento-continuar" type="button" aria-label="Continuar"><span id="pensamiento-texto"></span><span class="flecha-pensamiento">▾</span></button>
   </div>
@@ -206,6 +219,7 @@
   preload="auto"
   loop>
 </audio>
+  <audio id="audio-maullido" src="assets/audio/gato-maullido.wav" preload="auto"></audio>
 </main>
 </body>
 </html>

@@ -377,3 +377,48 @@ height: 29%;
   text-shadow: 0 2px 16px rgba(0, 0, 0, 0.65);
 }
 
+
+/* Ayudas discretas, visibles y coherentes con la estética original */
+.guia-ritual{position:absolute;z-index:12;bottom:3%;left:7%;right:7%;padding:9px 12px;text-align:center;color:#f4dfc7;background:#180e20d9;border:1px solid #cba17b55;border-radius:8px;font:italic 14px/1.4 Georgia,serif;pointer-events:none;text-shadow:0 1px 4px #000;}
+.carrusel.bloqueado{opacity:.72}.caratula{opacity:.88;transform:scale(.95)}
+.etiqueta-hielo{display:block;font:10px Georgia,serif;color:#f4d6b6}.servir-destino{left:23%;width:54%;height:32%;bottom:76%;pointer-events:none;}
+.planta-natural{left:2%;top:39%;width:39%;height:38%}.guia-riego{left:10%;top:53%;}.dibujo-riego{display:none}.guia-riego span{background:#180e20b0;padding:6px;border-radius:5px;white-space:normal;}
+.jardin-natural.regado::after{content:'';position:absolute;left:5%;top:69%;width:33%;height:10%;border-radius:50%;background:radial-gradient(ellipse,#101a2090,transparent 72%);pointer-events:none;}
+.boton-final{position:absolute;z-index:15;bottom:15%;left:50%;transform:translateX(-50%);background:#180e20;color:#f4dfc7;border:1px solid #cba17b;padding:12px 22px;border-radius:8px;font:16px Georgia,serif;white-space:nowrap;}
+
+
+/* Criaturas del callejón: visibles solo cuando la narrativa las menciona */
+.animal-escena{position:absolute;z-index:9;padding:0;border:0;background:transparent;pointer-events:auto;cursor:pointer;transition:transform .2s ease,filter .2s ease,opacity .2s ease;-webkit-tap-highlight-color:transparent}
+.animal-escena[hidden]{display:none !important}
+.animal-escena img{display:block;width:100%;height:auto;pointer-events:none;user-select:none;filter:drop-shadow(0 8px 14px rgba(6,2,14,.38))}
+.animal-escena:hover{transform:scale(1.03)}
+.animal-escena.tocado{animation:animal-pulso .35s ease}
+@keyframes animal-pulso{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
+.animal-escena.alerta{left:2.4%;bottom:14%;width:20%}
+.animal-escena.durmiendo{left:36%;bottom:16.5%;width:19%}
+.animal-escena.caminando{left:50%;bottom:14.5%;width:22%}
+.animal-escena.espiando{right:-1.5%;top:42%;width:16%}
+.animal-escena.hojas{right:4%;bottom:15%;width:24%;cursor:default;transform:rotate(5deg)}
+.animal-escena.hojas:hover{transform:rotate(5deg) scale(1.02)}
+
+/* Epílogo de Kino */
+
+.ultimo-cierre .fondo{animation:oscurecer-cierre 1.4s forwards}@keyframes oscurecer-cierre{to{filter:brightness(0)}}
+.marco-epilogo .fondo{filter:brightness(.82) saturate(.85)}
+.marco-epilogo::after{content:'';position:absolute;inset:0;background:linear-gradient(transparent 42%,#100817a0);pointer-events:none;}
+.epilogo-texto{position:absolute;z-index:12;bottom:15%;left:7%;right:7%;padding:19px 15px;background:#150b20e8;border:1px solid #ffd6a54a;border-radius:12px;text-align:center;color:#f6d8ba;font:italic clamp(17px,4vw,22px)/1.5 Georgia,serif;}
+.epilogo-accion{position:absolute;z-index:15;bottom:6%;left:12%;width:76%;padding:12px;border:1px solid #cba17b88;border-radius:8px;background:#180d28eb;color:#f4dfc7;cursor:pointer;font:15px Georgia,serif;}
+.epilogo-portada{position:absolute;z-index:4;left:10%;top:22%;width:23%;box-shadow:0 4px 12px #0009;transform:rotate(-6deg)}
+.epilogo-vinilo{position:absolute;z-index:4;left:30.8%;top:47.5%;width:44.6%;height:8.3%;border-radius:50%;background:radial-gradient(ellipse,var(--etiqueta) 0 23%,#131018 24%,#2c2530 26%,#100d15 29%,#241d29 32%,#100d15 35%,#251d29 38%,#100d15 41%,#29212c 47%,#110d17 50%,#0b0911 70%)}
+.epilogo-vaso{position:absolute;z-index:4;left:38%;top:73%;width:17%;height:9%;border:2px solid #e6c5ae99;border-radius:4px 4px 10px 10px;background:linear-gradient(to top,#b77e3c88 30%,#e7c6a417 31%);box-shadow:0 4px 9px #0008}
+.epilogo-fin{position:absolute;inset:0;z-index:25;background:#140b20;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:10%;color:#f4dfc7}.epilogo-fin[hidden],.epilogo-accion[hidden],.epilogo-texto[hidden],#epilogo-marca[hidden]{display:none}.epilogo-fin h1{font:italic 64px Georgia,serif;margin:0}.epilogo-fin button{padding:12px 20px;border:1px solid #cba17b;background:transparent;color:inherit;border-radius:8px;cursor:pointer}
+
+/* Pausa y revelación del desenlace */
+.marco-epilogo .fondo{transition:opacity 1.2s ease;}
+.marco-epilogo.revelacion{background:#08060b;}
+.marco-epilogo.revelacion .fondo{opacity:0;}
+.marco-epilogo.revelacion::after{opacity:0;}
+.marco-epilogo.revelacion .epilogo-texto{top:50%;bottom:auto;transform:translateY(-50%);background:transparent;border:0;padding:0 12px;white-space:pre-line;line-height:1.65;font-style:normal;color:#f4dfc7;}
+.marco-epilogo.revelacion .epilogo-accion:not([hidden]){animation:revelar-continuar .8s ease both;}
+@keyframes revelar-continuar{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.marco-epilogo .fondo{transition:none}.marco-epilogo.revelacion .epilogo-accion:not([hidden]){animation:none}}
